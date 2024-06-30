@@ -1,0 +1,31 @@
+services:
+  responder1:
+    build:
+      context: ./responder1
+      dockerfile: Dockerfile.responder1
+    networks:
+      - responder_network
+
+  responder2:
+    build:
+      context: ./responder2
+      dockerfile: Dockerfile.responder2
+    networks:
+      - responder_network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - nginx_network
+      - responder_network
+
+networks:
+  nginx_network:
+    external: true
+  responder_network:
+    internal: true
+
